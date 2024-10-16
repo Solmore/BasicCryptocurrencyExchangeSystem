@@ -1,48 +1,29 @@
 package com.solmore.basiccryptocurrencyexchangesystem.config
 
 
-import com.nimbusds.jose.jwk.JWKSet
-import com.nimbusds.jose.jwk.RSAKey
-import com.nimbusds.jose.jwk.source.ImmutableJWKSet
-import com.nimbusds.jose.jwk.source.JWKSource
-import com.nimbusds.jose.proc.SecurityContext
-import com.solmore.basiccryptocurrencyexchangesystem.web.security.Jwks
-import com.solmore.basiccryptocurrencyexchangesystem.web.security.JwtUserDetailsService
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
-import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.oauth2.core.AuthorizationGrantType
-import org.springframework.security.oauth2.core.oidc.OidcScopes
-import org.springframework.security.oauth2.jwt.JwtDecoder
-import org.springframework.security.oauth2.jwt.JwtEncoder
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder
-import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClient
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository
-import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration
-import org.springframework.security.oauth2.server.authorization.settings.ClientSettings
-import org.springframework.security.oauth2.server.authorization.settings.TokenSettings
-import org.springframework.security.web.DefaultSecurityFilterChain
-import org.springframework.security.web.SecurityFilterChain
-import java.security.KeyPair
-import java.security.interfaces.RSAPrivateKey
-import java.security.interfaces.RSAPublicKey
-import java.time.Duration
-import java.util.*
+/*import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 
-@Configuration
+//@Configuration
 //@EnableWebSecurity
 class ApplicationConfig(
-    private val userDetailsService: JwtUserDetailsService
-){
-    private val keyPair: KeyPair = Jwks.generateRsaKeyPair()
+    //private val userDetailsService: JwtUserDetailsService
+) {
+
+    @Configuration
+    class CorsConfig : WebMvcConfigurer {
+        override fun addCorsMappings(registry: CorsRegistry) {
+            registry.addMapping("/**") // Разрешаем все пути
+                .allowedOrigins("*") // Разрешаем все источники (домены)
+                .allowedMethods("*") // Разрешаем все методы (GET, POST, PUT, DELETE и т.д.)
+                .allowedHeaders("*") // Разрешаем все заголовки
+        }
+    }
+}*/
+
+    /*private val keyPair: KeyPair = Jwks.generateRsaKeyPair()
 
     @Bean
     fun passwordEncoder(): PasswordEncoder{
@@ -53,6 +34,8 @@ class ApplicationConfig(
     fun authenticationManager(configurer: AuthenticationConfiguration): AuthenticationManager {
         return configurer.getAuthenticationManager()
     }
+
+
 
 
     @Bean
@@ -127,4 +110,4 @@ class ApplicationConfig(
         return NimbusJwtDecoder.withPublicKey(keyPair.public as RSAPublicKey).build()
     }
 
-}
+}*/

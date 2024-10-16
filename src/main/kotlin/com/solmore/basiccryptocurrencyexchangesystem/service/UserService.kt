@@ -2,32 +2,19 @@ package com.solmore.basiccryptocurrencyexchangesystem.service
 
 import com.solmore.basiccryptocurrencyexchangesystem.domain.user.User
 import com.solmore.basiccryptocurrencyexchangesystem.repository.UserRepository
-import com.solmore.basiccryptocurrencyexchangesystem.web.dto.TokenDto
 import lombok.extern.slf4j.Slf4j
 import org.slf4j.LoggerFactory
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.oauth2.jwt.JwtClaimsSet
-import org.springframework.security.oauth2.jwt.JwtDecoder
-import org.springframework.security.oauth2.jwt.JwtEncoder
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters
 import org.springframework.stereotype.Service
-import java.time.Instant
-import java.time.temporal.ChronoUnit
 
 @Service
 @Slf4j
 class UserService(
     private val userRepository: UserRepository,
-    private val passwordEncoder: PasswordEncoder,
+/*    private val passwordEncoder: PasswordEncoder,
     private val authenticationManager: AuthenticationManager,
     private val jwtEncoder: JwtEncoder,
     private val jwtDecoder: JwtDecoder,
-    private val userDetailsService: UserDetailsService
+    private val userDetailsService: UserDetailsService*/
 ) {
 
     private val logger = LoggerFactory.getLogger(UserService::class.java)
@@ -39,7 +26,8 @@ class UserService(
         }
         val user = User(
             username = username,
-            password = passwordEncoder.encode(password)
+            //password = passwordEncoder.encode(password)
+            password = password,
         )
         userRepository.save(user)
     }
@@ -54,7 +42,7 @@ class UserService(
         return userRepository.findById(id).orElse(null)
     }
 
-    fun authenticate(username: String, password: String): TokenDto {
+/*    fun authenticate(username: String, password: String): TokenDto {
         val authentication = authenticationManager.authenticate(
             UsernamePasswordAuthenticationToken(username, password)
         )
@@ -101,6 +89,6 @@ class UserService(
 
         val jwt = JwtEncoderParameters.from(claims)
         return jwtEncoder.encode(jwt).tokenValue
-    }
+    }*/
 
 }

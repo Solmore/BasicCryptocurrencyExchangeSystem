@@ -24,19 +24,19 @@ class UserController(
         userService.getByUsername(userDto.username)?.let { walletService.createWalletsForUser(it.id) }
     }
 
-    @PostMapping("/auth")
-    @ResponseStatus(HttpStatus.OK)
-    fun auth(@RequestBody userDto: UserDto): TokenDto{
-        val response = userService.authenticate(userDto.username, userDto.password)
-        return response
-    }
-
-    @PostMapping("/refresh")
-    @ResponseStatus(HttpStatus.OK)
-    fun refresh(@RequestBody token:String): TokenDto{
-        val response = userService.refresh(token)
-        return response
-    }
+//    @PostMapping("/auth")
+//    @ResponseStatus(HttpStatus.OK)
+//    fun auth(@RequestBody userDto: UserDto): TokenDto{
+//        val response = userService.authenticate(userDto.username, userDto.password)
+//        return response
+//    }
+//
+//    @PostMapping("/refresh")
+//    @ResponseStatus(HttpStatus.OK)
+//    fun refresh(@RequestBody token:String): TokenDto{
+//        val response = userService.refresh(token)
+//        return response
+//    }
 
     @PostMapping("/{userId}/wallets")
     fun createWallet(

@@ -12,3 +12,5 @@ spring:
     change-log: classpath:liquibase/db.changelog.yaml
     enabled: true
     default-schema: ${POSTGRES_SCHEMA}
+server:
+  forward-headers-strategy: framework
