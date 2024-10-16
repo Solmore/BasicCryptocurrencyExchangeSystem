@@ -1,0 +1,59 @@
+CREATE TABLE users(
+    id BIGSERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    roles VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crypto_currencies(
+    id BIGSERIAL PRIMARY KEY,
+    code VARCHAR(10) NOT NULL UNIQUE,
+    name VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE fiat_currencies(
+    id BIGSERIAL PRIMARY KEY,
+    code VARCHAR(10) NOT NULL UNIQUE,
+    name VARCHAR(50) NOT NULL,
+    symbol VARCHAR(5) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE crypto_prices(
+    id BIGSERIAL PRIMARY KEY,
+    crypto_id BIGINT NOT NULL REFERENCES crypto_currencies(id) ON DELETE CASCADE,
+    fiat_id BIGINT NOT NULL REFERENCES fiat_currencies(id) On DELETE CASCADE,
+    price DECIMAL(20, 8) NOT NULL CHECK ( price > 0 ),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE wallets(
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    currency VARCHAR(10) NOT NULL,
+    balance DECIMAL(20,8) NOT NULL CHECK ( balance >= 0 )
+);
+
+CREATE TABLE transactions(
+    id BIGSERIAL PRIMARY KEY,
+    wallet_id BIGINT NOT NULL REFERENCES wallets(id) ON DELETE CASCADE,
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    type VARCHAR(20) NOT NULL CHECK ( type IN ('DEPOSIT', 'WITHDRAWAL')),
+    amount DECIMAL(20,8) NOT NULL CHECK ( amount > 0 ),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE orders(
+    id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    crypto_id BIGINT NOT NULL REFERENCES crypto_currencies(id),
+    fiat_id BIGINT NOT NULL REFERENCES fiat_currencies(id),
+    type VARCHAR(20) NOT NULL CHECK ( type IN ('BUY', 'SELL')),
+    amount DECIMAL(20,8) NOT NULL CHECK ( amount > 0 ),
+    price DECIMAL(20,8) NOT NULL  CHECK ( price > 0 ),
+    status VARCHAR(20) NOT NULL CHECK ( status IN ('OPEN', 'PARTIALLY_FILLED', 'CLOSED', 'CANCELLED') ),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
